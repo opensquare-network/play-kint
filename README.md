@@ -1,2 +1,2 @@
 # play-kint
-Scripts for play kintsugi
+Scripts for playing kintsugi
