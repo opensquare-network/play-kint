@@ -2,7 +2,7 @@ const { createTestKeyring } = require("@polkadot/keyring")
 const { allNetworks } = require("@polkadot/networks");
 
 const kintsugi = allNetworks.find(network => network.network === 'kintsugi');
-const instance = createTestKeyring({ ss58Format: kintsugi.prefix })
+const instance = createTestKeyring({ ss58Format: kintsugi.prefix });
 
 for (const pair of instance.pairs) {
   console.log(pair.address)
