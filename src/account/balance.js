@@ -5,7 +5,7 @@ const { allNetworks } = require("@polkadot/networks");
 const kintsugi = allNetworks.find(network => network.network === 'kintsugi');
 
 function normalizeEntry(api, [key, value]) {
-  const pubKeyU8a = key.slice(48, 81);
+  const pubKeyU8a = key.slice(48, 80);
   const addr = encodeAddress(pubKeyU8a, kintsugi.prefix);
   const currencyIdKey = key.slice(88);
 
