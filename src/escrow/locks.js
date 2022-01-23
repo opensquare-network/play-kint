@@ -22,7 +22,10 @@ async function getAllLocks() {
 
   const entries = await api.query.escrow.locked.entries()
   const allLocks = entries.map(entry => normalizeEntry(api, entry));
+
   console.log(allLocks)
+  const charlieLocked = await api.query.escrow.locked('a3dUtq9KTHT1kvin6Vrx2FjC5jCd8fju7bsYyE2rSE9uANgQP');
+  console.log('charlie', charlieLocked.toJSON())
 
   await disconnect()
 }
