@@ -7,6 +7,8 @@
   "license": "MIT",
   "dependencies": {
     "@interlay/interbtc-types": "^1.5.10",
-    "@polkadot/api": "^7.4.1"
+    "@interlay/monetary-js": "^0.5.3",
+    "@polkadot/api": "^7.4.1",
+    "bn.js": "^5.2.0"
   }
 }
