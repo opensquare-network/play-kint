@@ -8,7 +8,7 @@ const { createTestKeyring } = require("@polkadot/keyring");
   const charlie = instance.pairs[4];
   const unsub = await api.tx.escrow.createLock(
     0.1 * Math.pow(10, 12),
-    100000
+    10000000
   ).signAndSend(charlie, (result) => {
     console.log(`Current status is ${ result.status }`);
 
