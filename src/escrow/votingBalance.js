@@ -1,12 +1,14 @@
 const { getApi, disconnect } = require("../api");
 const { createTestKeyring } = require("@polkadot/keyring");
-const BN = require("bn.js")
 const monetary = require("@interlay/monetary-js")
-const { getFinalizedBlockNumber, parseEscrowPoint, newMonetaryAmount, } = require("./utils");
+const {
+  getFinalizedBlockNumber, parseEscrowPoint, newMonetaryAmount,
+  saturatingSub,
+} = require("./utils");
 
 function rawBalanceAt(escrowPoint, height) {
-  const heightDiff = new BN(height).sub(escrowPoint.ts);
-  return escrowPoint.bias.sub(escrowPoint.slope.mul(heightDiff));
+  const heightDiff = saturatingSub(height, escrowPoint.ts);
+  return saturatingSub(escrowPoint.bias, escrowPoint.slope.mul(heightDiff))
 }
 
 (async function () {

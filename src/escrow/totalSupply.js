@@ -1,4 +1,9 @@
-const { getFinalizedBlockNumber, parseEscrowPoint, newMonetaryAmount, } = require("./utils");
+const {
+  getFinalizedBlockNumber,
+  parseEscrowPoint,
+  newMonetaryAmount,
+  saturatingSub,
+} = require("./utils");
 const { getApi, disconnect } = require("../api");
 const BN = require("bn.js");
 const monetary = require("@interlay/monetary-js");
@@ -38,8 +43,11 @@ function rawSupplyAt(escrowPoint, height, escrowSpan, slopeChanges) {
       d_slope = getSlopeChange(slopeChanges, t_i);
     }
 
-    const heightDiff = t_i.sub(lastPoint.ts);
-    lastPoint.bias = lastPoint.bias.sub(lastPoint.slope.mul(heightDiff));
+    const heightDiff = saturatingSub(t_i, lastPoint.ts);
+    lastPoint.bias = saturatingSub(
+      lastPoint.bias,
+      lastPoint.slope.mul(heightDiff)
+    );
 
     if (t_i.eq(height)) {
       break;
@@ -76,6 +84,8 @@ function storageKeyToNthInner(s, n = 0) {
 
   const totalSupply = newMonetaryAmount(rawSupply.toString(), monetary.VoteKintsugi);
   console.log('the normalized total voting supply is', totalSupply.toHuman());
+
+  // let sqrt_electorate = electorate.max(tally.turnout).integer_sqrt();
 
   await disconnect();
 })()

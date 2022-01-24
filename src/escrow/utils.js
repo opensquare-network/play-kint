@@ -1,5 +1,6 @@
 const monetary = require("@interlay/monetary-js")
 const { getApi, } = require("../api");
+const BN = require("bn.js");
 
 async function getFinalizedBlockNumber() {
   const api = await getApi();
@@ -24,8 +25,13 @@ function newMonetaryAmount(
   return new monetary.MonetaryAmount(currency, amount, unit);
 }
 
+function saturatingSub(x, y) {
+  return BN.max(x.sub(y), new BN(0));
+}
+
 module.exports = {
   getFinalizedBlockNumber,
   parseEscrowPoint,
   newMonetaryAmount,
+  saturatingSub,
 }
