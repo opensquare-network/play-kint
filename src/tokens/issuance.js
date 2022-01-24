@@ -7,7 +7,7 @@ const monetary = require("@interlay/monetary-js");
   const currency = api.createType("InterbtcPrimitivesCurrencyId", { token: monetary.Kintsugi.ticker });
   const issuance = await api.query.tokens.totalIssuance(currency);
 
-  // This values will be used as the `electorate` in the voting threshold calculation
+  // total issuance of KINT
   console.log(issuance.toString());
 
   await disconnect();
