@@ -9,6 +9,7 @@
     "@interlay/interbtc-types": "^1.5.10",
     "@interlay/monetary-js": "^0.5.4",
     "@polkadot/api": "^7.4.1",
-    "bn.js": "^5.2.0"
+    "bn.js": "^5.2.0",
+    "lodash.isnil": "^4.0.0"
   }
 }
