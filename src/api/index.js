@@ -5,9 +5,9 @@ const { getRegistry } = require("./registry");
 let provider = null;
 let api = null;
 
-// const kintEndPoint = "wss://api-dev-kintsugi.interlay.io/parachain";
+const kintEndPoint = "wss://api-dev-kintsugi.interlay.io/parachain";
 
-const kintEndPoint = "wss://kintsugi.api.onfinality.io/public-ws";
+// const kintEndPoint = "wss://kintsugi.api.onfinality.io/public-ws";
 
 async function getApi() {
   const registry = getRegistry();
