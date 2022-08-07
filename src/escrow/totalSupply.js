@@ -87,7 +87,7 @@ function storageKeyToNthInner(s, n = 0) {
   const lastPoint = await api.query.escrow.pointHistory.at(blockHash, epoch);
   const rawSupply = rawSupplyAt(parseEscrowPoint(lastPoint), new BN(height), span, slopeChanges);
 
-  const totalSupply = newMonetaryAmount(rawSupply.toString(), monetary.VoteKintsugi);
+  const totalSupply = newMonetaryAmount(rawSupply.toString(), monetary.VoteInterlay);
   console.log('the normalized total voting supply is', totalSupply.toHuman());
 
   // let sqrt_electorate = electorate.max(tally.turnout).integer_sqrt();
