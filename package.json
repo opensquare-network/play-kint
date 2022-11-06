@@ -6,9 +6,9 @@
   "author": "Yongfeng LI <wliyongfeng@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@interlay/interbtc-types": "^1.5.10",
-    "@interlay/monetary-js": "^0.5.4",
-    "@polkadot/api": "^7.4.1",
+    "@interlay/interbtc-types": "0.30.0",
+    "@interlay/monetary-js": "0.7.0",
+    "@polkadot/api": "9.6.2",
     "bn.js": "^5.2.0",
     "lodash.isnil": "^4.0.0"
   }

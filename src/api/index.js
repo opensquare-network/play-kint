@@ -1,6 +1,5 @@
 const { ApiPromise, WsProvider, } = require("@polkadot/api");
-const definitions = require("./definitions");
-const { getRegistry } = require("./registry");
+const { kintsugiOptions } = require("./options");
 
 let provider = null;
 let api = null;
@@ -10,11 +9,10 @@ let api = null;
 const kintEndPoint = "wss://kintsugi.api.onfinality.io/public-ws";
 
 async function getApi() {
-  const registry = getRegistry();
 
   if (!api) {
     provider = new WsProvider(kintEndPoint);
-    api = await ApiPromise.create({ provider, registry, rpc: definitions.providerRpc });
+    api = await ApiPromise.create({ provider, ...kintsugiOptions });
   }
 
   return api;
