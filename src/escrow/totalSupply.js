@@ -15,7 +15,7 @@ async function getSpan() {
 }
 
 function getSlopeChange(slopeChanges, key) {
-  let d_slope = slopeChanges.get(key);
+  let d_slope = slopeChanges.get(key.toNumber());
   if (d_slope === undefined) {
     d_slope = new BN(0);
   }
@@ -26,7 +26,8 @@ function roundHeight(height, span) {
   return height.div(span).mul(span);
 }
 
-function rawSupplyAt(escrowPoint, height, escrowSpan, slopeChanges) {
+function rawSupplyAt(escrowPoint, height, span, slopeChanges) {
+  const escrowSpan = new BN(span);
   /*
       Rust reference implementation:
       https://github.com/interlay/interbtc/blob/0302612ae5f8ddf1f556042ca347c6104704ad83/crates/escrow/src/lib.rs#L530
@@ -72,19 +73,18 @@ function storageKeyToNthInner(s, n = 0) {
     height = await getFinalizedBlockNumber()
   }
   const blockHash = await api.rpc.chain.getBlockHash(height);
-
-  const [epoch, span, rawSlopeChanges] = await Promise.all([
-    api.query.escrow.epoch.at(blockHash),
-    getSpan(),
-    api.query.escrow.slopeChanges.entriesAt(blockHash)
-  ]);
+  const blockApi = await api.at(blockHash);
+  const span = blockApi.consts.escrow.span.toNumber();
+  const rawEpoch = await blockApi.query.escrow.epoch();
+  const epoch = rawEpoch.toNumber();
+  const rawSlopeChanges = await blockApi.query.escrow.slopeChanges.entries();
 
   const slopeChanges = new Map();
   rawSlopeChanges.forEach(
-    ([id, value]) => slopeChanges.set(storageKeyToNthInner(id).toBn(), value.toBn())
+    ([id, value]) => slopeChanges.set(storageKeyToNthInner(id).toNumber(), value.toJSON())
   );
 
-  const lastPoint = await api.query.escrow.pointHistory.at(blockHash, epoch);
+  const lastPoint = await blockApi.query.escrow.pointHistory(epoch);
   const rawSupply = rawSupplyAt(parseEscrowPoint(lastPoint), new BN(height), span, slopeChanges);
 
   const totalSupply = newMonetaryAmount(rawSupply.toString(), monetary.VoteInterlay);
@@ -93,4 +93,4 @@ function storageKeyToNthInner(s, n = 0) {
   // let sqrt_electorate = electorate.max(tally.turnout).integer_sqrt();
 
   await disconnect();
-})()
+})(524444)
